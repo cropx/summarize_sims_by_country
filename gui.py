@@ -19,9 +19,9 @@ class Gui(customtkinter.CTk):
         self.tree_frame_1 = None
         self.clear_frames = False
         self.iconbitmap("icon.ico")
-        self.version = 0.2
+        self.version = 0.3
         self.title(f"SimBa          Ver: {self.version}")
-        self.geometry(f"{850}x{900}")
+        self.geometry(f"{850}x{920}")
         customtkinter.set_appearance_mode("Dark")
         customtkinter.set_default_color_theme("dark-blue")
 
@@ -132,15 +132,19 @@ class Gui(customtkinter.CTk):
     def get_picture_hologram(self, result_hologram):  # [country, result_hologram]
         width, height = result_hologram[1].size
 
-        self.picture_frame = customtkinter.CTkFrame(self)
+        self.picture_frame = customtkinter.CTkScrollableFrame(self, height=220)
+        # self.picture_frame = customtkinter.CTkFrame(self)
         self.picture_frame.grid(row=5, column=0, sticky="nsew")
+        self.picture_frame._scrollbar.grid_forget()
+        # self.picture_frame._scrollbar.grid(row=5, column=0, sticky="nsew")
+        self.picture_frame._scrollbar.grid(row=1, column=0, padx=20, pady=0, sticky="w")
         hologram_label = customtkinter.CTkLabel(self.picture_frame, text="Hologram", text_color='#2d498a',
                                                 font=customtkinter.CTkFont(size=20, weight='bold'))
         hologram_label.grid(row=0, column=0, padx=20, pady=5, columnspan=2)
         self.hologram_pic = customtkinter.CTkImage(dark_image=Image.open(f'countries\{result_hologram[0]}.png'),
                                                    size=(int(width * 0.8), int(height * 0.8)))
         self.hologram_pic = customtkinter.CTkLabel(self.picture_frame, text="", image=self.hologram_pic)
-        self.hologram_pic.grid(row=1, column=0, padx=110, pady=2)
+        self.hologram_pic.grid(row=2, column=0, padx=110, pady=2)
 
     def version_def(self) -> float:
         return self.version
